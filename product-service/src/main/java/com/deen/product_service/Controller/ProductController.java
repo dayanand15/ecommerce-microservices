@@ -15,6 +15,7 @@ import com.deen.product_service.dto.ProductRequest;
 import com.deen.product_service.dto.ProductResponse;
 import com.deen.product_service.service.ProductService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -25,7 +26,7 @@ public class ProductController {
   private final ProductService productService;
   
   @PostMapping("/create")
-  public ProductResponse createProduct(@RequestBody ProductRequest productRequest){
+  public ProductResponse createProduct(@RequestBody @Valid ProductRequest productRequest){
     return productService.createProduct(productRequest);
   }
 
@@ -40,7 +41,7 @@ public class ProductController {
   }
 
   @PutMapping("/{product_id}")
-  public ProductResponse updateProduct(@PathVariable Long product_id, @RequestBody ProductRequest productRequest){
+  public ProductResponse updateProduct(@PathVariable Long product_id,@Valid @RequestBody ProductRequest productRequest){
     return productService.updateProduct(product_id, productRequest);
   }
 

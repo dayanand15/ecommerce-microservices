@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.deen.product_service.dto.ProductRequest;
 import com.deen.product_service.dto.ProductResponse;
 import com.deen.product_service.entity.Product;
+import com.deen.product_service.exception.ProductNotFoundException;
 import com.deen.product_service.repository.ProductRepository;
 
 import lombok.AllArgsConstructor;
@@ -55,7 +56,7 @@ public class ProductService {
 
   public ProductResponse getProductById(Long product_id){
     Product product=productRepository.findById(product_id)
-              .orElseThrow(() -> new RuntimeException("Product not found"));
+              .orElseThrow(() ->  new ProductNotFoundException("Product not found with id: "+ product_id));
     
     return new ProductResponse(
       product.getProduct_id(),
@@ -69,7 +70,7 @@ public class ProductService {
   public ProductResponse updateProduct(Long product_id,ProductRequest productRequest){
     
     Product product=productRepository.findById(product_id)
-                      .orElseThrow(() -> new RuntimeException("product not found"));
+                      .orElseThrow(() -> new  ProductNotFoundException("Product not found with id: "+ product_id));
 
     product.setName(productRequest.getName());
     product.setDescription(productRequest.getDescription());
@@ -91,7 +92,7 @@ public class ProductService {
 
   public void deleteProduct(Long product_id){
     Product product=productRepository.findById(product_id)
-              .orElseThrow(() -> new RuntimeException("product id not found to delete"));
+              .orElseThrow(() -> new ProductNotFoundException("Product not found with id: to delete "+ product_id));
 
     productRepository.delete(product);
   }
