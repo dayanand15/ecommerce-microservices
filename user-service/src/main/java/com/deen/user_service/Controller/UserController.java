@@ -15,6 +15,7 @@ import com.deen.user_service.dto.UserRequest;
 import com.deen.user_service.dto.UserResponse;
 import com.deen.user_service.service.UserService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -25,7 +26,7 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping("/create")
-  public UserResponse createUser(@RequestBody UserRequest userRequest){
+  public UserResponse createUser(@RequestBody @Valid UserRequest userRequest){
     return userService.createUser(userRequest);
   }
 
@@ -40,7 +41,7 @@ public class UserController {
   }
 
   @PutMapping("/{user_id}")
-  public UserResponse updateUser(@PathVariable Long user_id,@RequestBody UserRequest userRequest){
+  public UserResponse updateUser(@PathVariable Long user_id,@Valid @RequestBody UserRequest userRequest){
     return userService.updateUser(user_id,userRequest);
   }
 

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.deen.user_service.dto.UserRequest;
 import com.deen.user_service.dto.UserResponse;
 import com.deen.user_service.entity.User;
+import com.deen.user_service.exception.UserNotFoundException;
 import com.deen.user_service.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
@@ -34,7 +35,7 @@ public class UserService {
 //GET USER BY USER_ID
   public UserResponse getUserById(Long user_id){
     User user = userRepository.findById(user_id)
-            .orElseThrow(() -> new RuntimeException("User id not found"));
+            .orElseThrow(() -> new UserNotFoundException("User id not found with "+user_id));
   
     return new UserResponse(
       user.getUser_id(),
@@ -59,7 +60,7 @@ public class UserService {
   //UPDATE USER USING USER_ID
   public UserResponse updateUser(Long user_id,UserRequest userRequest){
     User user=userRepository.findById(user_id)
-            .orElseThrow(()-> new RuntimeException("User not found"));
+            .orElseThrow(()-> new UserNotFoundException("User id not found with "+user_id));
 
     user.setName(userRequest.getName());
     user.setEmail(userRequest.getEmail());
