@@ -2,8 +2,9 @@ package com.deen.product_service.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import com.deen.product_service.dto.ProductRequest;
 import com.deen.product_service.dto.ProductResponse;
 import com.deen.product_service.entity.Product;
@@ -12,14 +13,18 @@ import com.deen.product_service.repository.ProductRepository;
 
 import lombok.AllArgsConstructor;
 
+
 @Service
 @AllArgsConstructor
 public class ProductService {
   
+  private static final Logger log=LoggerFactory.getLogger(ProductService.class);
+
   private final ProductRepository productRepository;
 
   public ProductResponse createProduct(ProductRequest productRequest){
-    
+    log.info("Creating product with name: {}", productRequest.getName());
+
     Product product=new Product();
 
     product.setName(productRequest.getName());
@@ -29,7 +34,8 @@ public class ProductService {
     product.setStockQuantity(productRequest.getStockQuantity());
 
     Product saved = productRepository.save(product);
-
+    log.info("Product created successfully with product id: {]", saved.getProduct_id());
+    
     return new ProductResponse(
       saved.getProduct_id(),
       saved.getName(),
@@ -42,7 +48,11 @@ public class ProductService {
 
 
   public List<ProductResponse> getAllProducts(){
-    return productRepository.findAll().stream()
+    log.info("Fetching all products");
+
+     List<ProductResponse> allProducts=productRepository
+              .findAll()
+              .stream()
               .map(product -> new ProductResponse(
                 product.getProduct_id(),
                 product.getName(),
@@ -52,9 +62,13 @@ public class ProductService {
               product.getCategory()                
               ))
               .toList();
+      log.info("Total products found: {}",allProducts.size());
+
+    return allProducts;
   }
 
   public ProductResponse getProductById(Long product_id){
+    log.info("Fetching product with id: {}",product_id);
     Product product=productRepository.findById(product_id)
               .orElseThrow(() ->  new ProductNotFoundException("Product not found with id: "+ product_id));
     
@@ -68,7 +82,7 @@ public class ProductService {
   }
 
   public ProductResponse updateProduct(Long product_id,ProductRequest productRequest){
-    
+    log.info("Updating product with id: {}",product_id);
     Product product=productRepository.findById(product_id)
                       .orElseThrow(() -> new  ProductNotFoundException("Product not found with id: "+ product_id));
 
@@ -80,6 +94,7 @@ public class ProductService {
 
     Product updated=productRepository.save(product);
 
+    log.info("Product updated successfully with id: {}", product_id);
     return new ProductResponse(
       updated.getProduct_id(),
       updated.getName(),
@@ -91,9 +106,11 @@ public class ProductService {
   }
 
   public void deleteProduct(Long product_id){
+    log.info("Deleting product with id: {}",product_id);
     Product product=productRepository.findById(product_id)
               .orElseThrow(() -> new ProductNotFoundException("Product not found with id: to delete "+ product_id));
 
     productRepository.delete(product);
+    log.info("Product deleted successfully with id: {}",product_id);
   }
 }
