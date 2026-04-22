@@ -34,10 +34,10 @@ public class ProductService {
     product.setStockQuantity(productRequest.getStockQuantity());
 
     Product saved = productRepository.save(product);
-    log.info("Product created successfully with product id: {]", saved.getProduct_id());
+    log.info("Product created successfully with product id: {]", saved.getProductId());
     
     return new ProductResponse(
-      saved.getProduct_id(),
+      saved.getProductId(),
       saved.getName(),
       saved.getDescription(), 
       saved.getPrice(),
@@ -54,7 +54,7 @@ public class ProductService {
               .findAll()
               .stream()
               .map(product -> new ProductResponse(
-                product.getProduct_id(),
+                product.getProductId(),
                 product.getName(),
                 product.getDescription(),
                 product.getPrice(),
@@ -73,7 +73,7 @@ public class ProductService {
               .orElseThrow(() ->  new ProductNotFoundException("Product not found with id: "+ product_id));
     
     return new ProductResponse(
-      product.getProduct_id(),
+      product.getProductId(),
       product.getName(),
       product.getDescription(),
       product.getPrice(),
@@ -96,7 +96,7 @@ public class ProductService {
 
     log.info("Product updated successfully with id: {}", product_id);
     return new ProductResponse(
-      updated.getProduct_id(),
+      updated.getProductId(),
       updated.getName(),
       updated.getDescription(),
       updated.getPrice(),
