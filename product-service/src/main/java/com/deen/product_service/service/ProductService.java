@@ -67,10 +67,10 @@ public class ProductService {
     return allProducts;
   }
 
-  public ProductResponse getProductById(Long product_id){
-    log.info("Fetching product with id: {}",product_id);
-    Product product=productRepository.findById(product_id)
-              .orElseThrow(() ->  new ProductNotFoundException("Product not found with id: "+ product_id));
+  public ProductResponse getProductById(long productId){
+    log.info("Fetching product with id: {}", productId);
+    Product product = productRepository.findById(productId)
+              .orElseThrow(() ->  new ProductNotFoundException("Product not found with id: " + productId));
     
     return new ProductResponse(
       product.getProductId(),
@@ -81,10 +81,10 @@ public class ProductService {
       product.getCategory());
   }
 
-  public ProductResponse updateProduct(Long product_id,ProductRequest productRequest){
-    log.info("Updating product with id: {}",product_id);
-    Product product=productRepository.findById(product_id)
-                      .orElseThrow(() -> new  ProductNotFoundException("Product not found with id: "+ product_id));
+  public ProductResponse updateProduct(Long productId,ProductRequest productRequest){
+    log.info("Updating product with id: {}",productId);
+    Product product=productRepository.findById(productId)
+                      .orElseThrow(() -> new  ProductNotFoundException("Product not found with id: "+ productId));
 
     product.setName(productRequest.getName());
     product.setDescription(productRequest.getDescription());
@@ -94,7 +94,7 @@ public class ProductService {
 
     Product updated=productRepository.save(product);
 
-    log.info("Product updated successfully with id: {}", product_id);
+    log.info("Product updated successfully with id: {}", productId);
     return new ProductResponse(
       updated.getProductId(),
       updated.getName(),
@@ -105,12 +105,12 @@ public class ProductService {
     );
   }
 
-  public void deleteProduct(Long product_id){
-    log.info("Deleting product with id: {}",product_id);
-    Product product=productRepository.findById(product_id)
-              .orElseThrow(() -> new ProductNotFoundException("Product not found with id: to delete "+ product_id));
+  public void deleteProduct(Long productId){
+    log.info("Deleting product with id: {}",productId);
+    Product product=productRepository.findById(productId)
+              .orElseThrow(() -> new ProductNotFoundException("Product not found with id: to delete "+ productId));
 
     productRepository.delete(product);
-    log.info("Product deleted successfully with id: {}",product_id);
+    log.info("Product deleted successfully with id: {}",productId);
   }
 }
