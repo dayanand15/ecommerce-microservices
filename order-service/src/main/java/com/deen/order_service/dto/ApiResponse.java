@@ -10,7 +10,7 @@ import lombok.Data;
 public class ApiResponse<T> {
 
   private LocalDateTime timestamp;
-  private boolean success;
+  private Integer status;
   private String message;
   private T data;
 

@@ -27,9 +27,9 @@ public class UserService {
 
     User saved=userRepository.save(user);
 
-    log.info("User created successfully with user id: {}",saved.getUser_id());
+    log.info("User created successfully with user id: {}",saved.getUserId());
     return new UserResponse(
-      saved.getUser_id(),
+      saved.getUserId(),
       saved.getName(),
       saved.getEmail(),
       saved.getPhone()
@@ -43,7 +43,7 @@ public class UserService {
             .orElseThrow(() -> new UserNotFoundException("User id not found with "+user_id));
   
     return new UserResponse(
-      user.getUser_id(),
+      user.getUserId(),
       user.getName(),
       user.getEmail(),
       user.getPhone()   
@@ -55,7 +55,7 @@ public class UserService {
      log.info("Fetching all the users");
      List<UserResponse> allUser = userRepository.findAll().stream()
             .map(user -> new UserResponse(
-              user.getUser_id(),
+              user.getUserId(),
               user.getName(),
               user.getEmail(),
               user.getPhone()
@@ -76,9 +76,9 @@ public class UserService {
     user.setPhone(userRequest.getPhone());
 
     User updated=userRepository.save(user);
-    log.info("Updated user succesfully with user id: {}",user_id);
+    log.info("Updated user successfully with user id: {}",user_id);
     return new UserResponse(
-      updated.getUser_id(),
+      updated.getUserId(),
       updated.getName(),
       updated.getEmail(),
       updated.getPhone()
