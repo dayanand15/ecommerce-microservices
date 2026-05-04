@@ -10,7 +10,7 @@ public class OrderResponse {
   private Long orderId;
   private Long userId;
   private Long productId;
-  private Long productName;
-  private Long quantity;
+  private String productName;
+  private Integer quantity;
 
 }

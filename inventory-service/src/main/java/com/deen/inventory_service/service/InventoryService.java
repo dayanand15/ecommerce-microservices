@@ -1,6 +1,9 @@
 package com.deen.inventory_service.service;
 
+import com.deen.inventory_service.dto.InventoryResponse;
 import com.deen.inventory_service.entity.Inventory;
+import com.deen.inventory_service.exception.InsufficientStockException;
+import com.deen.inventory_service.exception.ProductNotFoundException;
 import com.deen.inventory_service.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -12,16 +15,17 @@ public class InventoryService {
 
     private final InventoryRepository inventoryRepository;
 
-    public void reduceStock(Long productId,Integer quantity){
-        Inventory inventory= inventoryRepository.findByProductId(productId)
-                .orElseThrow(()-> new RuntimeException("Product Id not found"));
+    public Boolean reduceStock(Long productId, Integer quantity){
+        Inventory inventory= inventoryRepository.findByProductId(productId);
 
-        if(inventory.getQuantity()<quantity){
-            throw new RuntimeException("Not enough stock");
+        if(inventory ==  null || inventory.getQuantity() < quantity){
+            return false;
         }
 
         inventory.setQuantity(inventory.getQuantity()-quantity);
-        inventoryRepository.save(inventory);
+        Inventory saved=inventoryRepository.save(inventory);
+
+        return true;
 
     }
 

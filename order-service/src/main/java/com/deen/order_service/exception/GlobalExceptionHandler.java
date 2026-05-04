@@ -17,28 +17,35 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ApiResponse<String>> handleUserNotFound(UserNotFoundException ex){
 
     return ResponseEntity.status(HttpStatus.NOT_FOUND)
-              .body(new ApiResponse<>(LocalDateTime.now(),false,ex.getMessage(),null));
+              .body(new ApiResponse<>(LocalDateTime.now(),404,ex.getMessage(),null));
   }
 
   @ExceptionHandler(ProductNotFoundException.class)
   public ResponseEntity<ApiResponse<String>> handleProductNotFound(ProductNotFoundException ex){
 
     return ResponseEntity.status(HttpStatus.NOT_FOUND)
-              .body(new ApiResponse<>(LocalDateTime.now(),false,ex.getMessage(),null));
+              .body(new ApiResponse<>(LocalDateTime.now(),404,ex.getMessage(),null));
+  }
+
+  @ExceptionHandler(InsufficientStockException.class)
+  public ResponseEntity<ApiResponse<String>> handleInsufficientStock(InsufficientStockException ex){
+
+    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(new ApiResponse<>(LocalDateTime.now(),404,ex.getMessage(),null));
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<ApiResponse<String>> handleMethodArgumentNotFound(MethodArgumentNotValidException ex){
 
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-              .body(new ApiResponse<>(LocalDateTime.now(),false,ex.getMessage(),null));
+              .body(new ApiResponse<>(LocalDateTime.now(),400,ex.getMessage(),null));
   }
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ApiResponse<String>> handleGeneric(Exception ex){
 
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-              .body(new ApiResponse<>(LocalDateTime.now(),false,ex.getMessage(),null));
+              .body(new ApiResponse<>(LocalDateTime.now(),500,ex.getMessage(),null));
   }
 
 }
