@@ -1,51 +1,46 @@
 package com.deen.order_service.exception;
 
-import java.time.LocalDateTime;
+import com.deen.order_service.dto.ApiResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.deen.order_service.dto.ApiResponse;
+import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-  @ExceptionHandler(UserNotFoundException.class)
-  public ResponseEntity<ApiResponse<String>> handleUserNotFound(UserNotFoundException ex){
+  private <T> ResponseEntity<ApiResponse<T>> buildResponse(String message, HttpStatus status) {
+    ApiResponse<T> response = new ApiResponse<>(
+            LocalDateTime.now(),
+            status.value(),
+            false,
+            message,
+            null
+    );
 
-    return ResponseEntity.status(HttpStatus.NOT_FOUND)
-              .body(new ApiResponse<>(LocalDateTime.now(),404,ex.getMessage(),null));
+    return new ResponseEntity<>(response, status);
+  }
+
+  @ExceptionHandler(UserNotFoundException.class)
+  public ResponseEntity<ApiResponse<Object>> handleUser(UserNotFoundException ex) {
+    return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
   }
 
   @ExceptionHandler(ProductNotFoundException.class)
-  public ResponseEntity<ApiResponse<String>> handleProductNotFound(ProductNotFoundException ex){
-
-    return ResponseEntity.status(HttpStatus.NOT_FOUND)
-              .body(new ApiResponse<>(LocalDateTime.now(),404,ex.getMessage(),null));
+  public ResponseEntity<ApiResponse<Object>> handleProduct(ProductNotFoundException ex) {
+    return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
   }
 
   @ExceptionHandler(InsufficientStockException.class)
-  public ResponseEntity<ApiResponse<String>> handleInsufficientStock(InsufficientStockException ex){
-
-    return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            .body(new ApiResponse<>(LocalDateTime.now(),404,ex.getMessage(),null));
-  }
-
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<ApiResponse<String>> handleMethodArgumentNotFound(MethodArgumentNotValidException ex){
-
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-              .body(new ApiResponse<>(LocalDateTime.now(),400,ex.getMessage(),null));
+  public ResponseEntity<ApiResponse<Object>> handleStock(InsufficientStockException ex) {
+    return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(Exception.class)
-  public ResponseEntity<ApiResponse<String>> handleGeneric(Exception ex){
-
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-              .body(new ApiResponse<>(LocalDateTime.now(),500,ex.getMessage(),null));
+  public ResponseEntity<ApiResponse<Object>> handleGeneric(Exception ex) {
+    return buildResponse(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
-
 }
