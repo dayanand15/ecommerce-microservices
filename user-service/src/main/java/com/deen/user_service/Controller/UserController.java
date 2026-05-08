@@ -33,6 +33,7 @@ public class UserController {
 
      return new ApiResponse<UserResponse>
      (LocalDateTime.now(),
+             true,
       201,
       "User created successfully",
       userResponse
@@ -45,6 +46,7 @@ public class UserController {
 
     return new ApiResponse<UserResponse>
      (LocalDateTime.now(),
+             true,
       200,
       "User fetched successfully",
       userResponse
@@ -57,6 +59,7 @@ public class UserController {
 
     return new ApiResponse<List<UserResponse>>
      (LocalDateTime.now(),
+      true,
       200,
       "User fetched successfully",
       userResponse
@@ -69,6 +72,7 @@ public class UserController {
 
      return new ApiResponse<UserResponse>
      (LocalDateTime.now(),
+             true,
       200,
       "User updated successfully",
       userResponse
@@ -81,6 +85,7 @@ public class UserController {
 
      return new ApiResponse<String>
      (LocalDateTime.now(),
+             true,
       200,
       "User deleted successfully",
       "User deleted successfully"
