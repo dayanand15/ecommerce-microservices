@@ -1,5 +1,6 @@
 package com.deen.order_service.client;
 
+//import com.deen.order_service.config.FeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,5 +11,5 @@ import com.deen.order_service.dto.ApiResponse;
 public interface UserClient {
 
   @GetMapping("/users/{id}")
-  ApiResponse<UserResponse> getUserById(@PathVariable Long id);
+  ApiResponse<UserResponse> getUserById(@PathVariable("id") Long id);
 }

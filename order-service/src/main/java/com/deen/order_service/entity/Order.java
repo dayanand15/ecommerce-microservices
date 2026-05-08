@@ -25,7 +25,7 @@ public class Order {
   private Long productId;
 
   private String productName;
-  private Integer quanaity;
+  private Integer quantity;
 
   private LocalDateTime createdAt; 
 
