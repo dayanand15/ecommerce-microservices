@@ -15,7 +15,7 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
-    @PutMapping("/reduce-stock")
+    @PutMapping("/reduce")
     public Boolean reduceStock(@RequestParam Long productId,
                                @RequestParam Integer quantity){
         return inventoryService.reduceStock(productId,quantity);
