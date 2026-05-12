@@ -21,7 +21,7 @@ public class InventoryService {
         if(inventory ==  null || inventory.getQuantity() < quantity){
             return false;
         }
-
+        System.out.println("REDUCE STOCK CALLED");
         inventory.setQuantity(inventory.getQuantity()-quantity);
         Inventory saved=inventoryRepository.save(inventory);
 
