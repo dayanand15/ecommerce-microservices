@@ -21,7 +21,7 @@ resilience4j: # Dependency
         registerHealthIndicator: true # registers health of the service as Up or Down
         slidingWindowSize: 5 # circuitbreaker remembers last 5 calls
         minimumNumberOfCalls: 3 # at least 3 calls happen before calculating failure percentage.(ex. 50% failure)
-        failureRateThreshold: 50 # 50% or more request fails then circuit becomes OPEN
+        failureRateThreshold: 50 # 50% or more request fails, then circuit becomes OPEN
         waitDurationInOpenState: 10s # it blocks all the requests for 10 seconds. allows failed service to recover.
         permittedNumberOfCallsInHalfOpenState: 2 #after 10 seconds allow only 2 test requests.
           #if req successful -> HALF_OPEN becomes CLOSED, if req failure -> HALF_OPEN becomes OPEN
@@ -49,7 +49,7 @@ resilience4j: # Dependency
     instances:
 
       userServiceRetry:
-        maxAttempts: 3 # Try original call + 2 retries. retries 2 more time to check if was is temporarily down.
+        maxAttempts: 3 # Try original call + 2 retries. retries 2 more time to check if was  temporarily down.
         waitDuration: 2s # duration between fail and retry
         enable-exponential-backoff: true
         exponential-backoff-multiplier: 2 # instead of fixed wait it becomes 2s,4s,8s
