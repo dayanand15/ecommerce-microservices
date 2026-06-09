@@ -45,6 +45,9 @@ resilience4j: # Dependency
           permittedNumberOfCallsInHalfOpenState: 2
           automaticTransitionFromOpenToHalfOpenEnabled: true
 
+          ignore-exceptions:
+            - org.springframework.orm.ObjectOptimisticLockingFailureException
+
   retry:
     instances:
 

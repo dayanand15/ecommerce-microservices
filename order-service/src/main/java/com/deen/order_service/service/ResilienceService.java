@@ -11,6 +11,7 @@ import com.deen.order_service.exception.ProductNotFoundException;
 import com.deen.order_service.exception.UserNotFoundException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -91,7 +92,6 @@ public class ResilienceService {
 
     public Boolean inventoryFallback(Long productId,Integer quantity,Exception ex){
         System.out.println("Inventory fallback executed");
-
         throw new RuntimeException("Inventory service temporarily unavailable");
     }
 }

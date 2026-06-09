@@ -20,4 +20,7 @@ public class Inventory {
 
     private Integer quantity;
 
+    @Version
+    private Long version;
+
 }
