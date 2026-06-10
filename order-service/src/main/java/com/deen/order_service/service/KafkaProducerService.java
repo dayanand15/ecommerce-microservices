@@ -21,3 +21,8 @@ public class KafkaProducerService {
         System.out.println("OrderCreatedEvent Published: "+event.getOrderId());
     }
 }
+//Step 1 : event created.
+//Step 2 : Serializer converts OrderCreatedEvent to JSON
+//Step 3 : KafkaTemplate creates ProducerRecord
+//Step 4 : Record sent to order-events topic.
+//step 5 : Broker store events
