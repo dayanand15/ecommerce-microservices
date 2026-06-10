@@ -12,7 +12,7 @@ public class KafkaConfig {
         return new NewTopic(
                 "order-events",
                 1,
-                (short) 1
+                (short) 1 // Replication Factor
         );
     }
 }
